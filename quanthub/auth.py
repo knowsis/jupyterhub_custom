@@ -34,7 +34,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
 
             name = user.name
 
-            cmd = "su - {0} -c \"conda env create -f {0}\"".format(
+            cmd = 'su - {0} -c "conda env create -f {0}"'.format(
                 name, self.environment_config_file
             )
 
