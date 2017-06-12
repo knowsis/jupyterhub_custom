@@ -18,7 +18,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
         Create a new local UNIX user on the system.
         Create default environment for user from the specified environment file
         """
-        super(CustomLocalAuthenticator).add_system_user(user)
+        super().add_system_user(user)
 
         self.create_default_conda_environment(user)
 
@@ -34,7 +34,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
 
             name = user.name
 
-            cmd = "su - {0} conda env create -f {0}".format(
+            cmd = "su - {0} -c \"conda env create -f {0}\"".format(
                 name, self.environment_config_file
             )
 
