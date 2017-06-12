@@ -1,3 +1,5 @@
+from setuptools import setup
+
 setup(
     name='quanthub',
     include_package_data=True,
