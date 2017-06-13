@@ -72,7 +72,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
             uid = pwd.getpwnam(name).pw_uid
             gid = grp.getgrnam(name).gr_gid
 
-            os.chown("/data/{0}/.conda/environments.txt", uid, gid)
+            os.chown("/data/{0}/.conda/environments.txt".format(name), uid, gid)
 
 
 class CustomGoogleOAuthenticator(
