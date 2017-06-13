@@ -34,20 +34,26 @@ class CustomLocalAuthenticator(LocalAuthenticator):
 
             name = user.name
 
-            cmd = 'su - {0} -c "conda env create -f {0}"'.format(
-                name, self.environment_config_file
-            )
+            cmd = ['su', '-', name, "-c",
+                   "/opt/anaconda/bin/conda-env create -f {0} -p /data/{"
+                   "1}/.conda/envs -vvv --force"
+                   "".format(
+                       self.environment_config_file, name)]
 
             self.log.info("Creating user environment from config: %s",
                           ' '.join(map(
                               pipes.quote, cmd)))
+
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
+
             p.wait()
+
             if p.returncode:
                 err = p.stdout.read().decode('utf8', 'replace')
                 raise RuntimeError(
-                    "Failed to create user default environment %s: %s" % (name,
-                                                                          err))
+                    "Failed to create user default environment "
+                    "{0}: {1}".format(name, err)
+                )
 
             location = '/data/{0}/.conda/envs/local'.format(name)
 
