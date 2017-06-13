@@ -35,9 +35,9 @@ class CustomLocalAuthenticator(LocalAuthenticator):
             name = user.name
 
             cmd = ['su', '-', name, "-c",
-                   "/opt/anaconda/bin/conda-env create -f {0} -p /data/{1}/.conda/envs -v --force"
-                   "".format(
-                       self.environment_config_file, name)]
+                   "/opt/anaconda/bin/conda-env create -f {0} -v "
+                   "--force".format(self.environment_config_file, name)
+            ]
 
             self.log.info("Creating user environment from config: %s",
                           ' '.join(map(
