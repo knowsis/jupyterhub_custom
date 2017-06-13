@@ -35,8 +35,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
             name = user.name
 
             cmd = ['su', '-', name, "-c",
-                   "/opt/anaconda/bin/conda-env create -f {0} -p /data/{"
-                   "1}/.conda/envs -v --force"
+                   "/opt/anaconda/bin/conda-env create -f {0} -p /data/{1}/.conda/envs -v --force"
                    "".format(
                        self.environment_config_file, name)]
 
@@ -46,7 +45,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
 
             p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
 
-            p.wait()
+            stdout, stderr = p.communicate()
 
             if p.returncode:
                 err = p.stdout.read().decode('utf8', 'replace')
