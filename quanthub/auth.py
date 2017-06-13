@@ -36,7 +36,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
 
             cmd = ['su', '-', name, "-c",
                    "/opt/anaconda/bin/conda-env create -f {0} -p /data/{"
-                   "1}/.conda/envs -vvv --force"
+                   "1}/.conda/envs -v --force"
                    "".format(
                        self.environment_config_file, name)]
 
