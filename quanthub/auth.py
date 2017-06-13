@@ -1,6 +1,10 @@
+import os
 import pipes
 from subprocess import Popen, PIPE, STDOUT
 
+import grp
+
+import pwd
 from jupyterhub.auth import LocalAuthenticator
 from oauthenticator import GoogleOAuthenticator
 from traitlets import Unicode
@@ -54,7 +58,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
                     "{0}: {1}".format(name, err)
                 )
 
-            location = '/data/{0}/.conda/envs/local'.format(name)
+            location = '/data/{0}/.conda/envs/local\n'.format(name)
 
             with open("/data/{0}/.conda/environments.txt".format(name), "a+") \
                     as file:
@@ -64,6 +68,11 @@ class CustomLocalAuthenticator(LocalAuthenticator):
                         break
                 else:  # not found, we are at the eof
                     file.write(location)  # append missing data
+
+            uid = pwd.getpwnam(name).pw_uid
+            gid = grp.getgrnam(name).gr_gid
+
+            os.chown("/data/{0}/.conda/environments.txt", uid, gid)
 
 
 class CustomGoogleOAuthenticator(
