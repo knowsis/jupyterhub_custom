@@ -56,7 +56,7 @@ class CustomLocalAuthenticator(LocalAuthenticator):
 
             location = '/data/{0}/.conda/envs/local'.format(name)
 
-            with open("/data/{0}/.conda/environments.txt".format(name), "r+") \
+            with open("/data/{0}/.conda/environments.txt".format(name), "a+") \
                     as file:
 
                 for line in file:
